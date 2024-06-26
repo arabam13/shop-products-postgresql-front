@@ -1,0 +1,50 @@
+.container{
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+    margin-top: 100px;
+    display: flex;
+    // flex-direction: column;
+    justify-content: center;
+    position: relative;
+    left: 10%;
+}
+
+p-dataView{
+    min-width:1000px;
+    padding: 10px;
+}
+
+.header-actions{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.card-list-item, .card-grid-item{
+    padding-top:20px;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper .pi-search {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.input-wrapper input {
+    padding-left: 30px;
+}
+
+p-paginator {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    left: 50%;
+    transform: translateX(-40%);
+}

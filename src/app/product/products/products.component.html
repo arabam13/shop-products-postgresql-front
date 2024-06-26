@@ -1,0 +1,88 @@
+<p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"
+    *ngIf="loading$ | async; else dataViewList"
+    [ngStyle]="{'position':'absolute', 'top':'25%', 'left':'50%'}"></p-progressSpinner>
+<ng-template #dataViewList>
+    <div class="container" *ngIf="products$ | async as products">
+        <p-dataView #dv [value]="products">
+            <ng-template pTemplate="header">
+                <div class="header-actions">
+                    <div [ngStyle]="{'display':'flex', 'gap':'20px'}">
+                        <p-dropdown [options]="searchTypeOptions" placeholder="Sort By" [formControl]="searchTypeCtrl">
+                        </p-dropdown>
+                        <div class="input-wrapper">
+                            <i class="pi pi-search"></i>
+                            <input pInputText id="search" aria-describedby="search" placeholder="Search"
+                                [formControl]="searchCtrl" />
+                        </div>
+                    </div>
+                    <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="listItem" let-product>
+                <div class="card card-list-item">
+                    <p-card>
+                        <ng-template pTemplate="header">
+                            <div>
+                                <i class="pi pi-tag"></i>
+                                {{product.category}}
+                            </div>
+                            <div>
+                                {{product.inventoryStatus}}
+                            </div>
+                        </ng-template>
+                        <div>
+                            {{product.name}}
+                        </div>
+                        <div>
+                            {{product.description}}
+                        </div>
+                        <div>
+                            <i class='pi' *ngFor="let i of [0, 1, 2, 3, 4]; let index = index"
+                                [ngClass]="{'pi-star-fill': index < product.rating, 'pi-star': index >= product.rating}"
+                                [ngStyle]="{'margin-right':'10px'}"></i>
+                        </div>
+
+                        <ng-template pTemplate="footer">
+                            ${{product.price}}
+                            <p-button icon="pi pi-shopping-cart"></p-button>
+                        </ng-template>
+                    </p-card>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="gridItem" let-product>
+                <div class="card card-grid-item">
+                    <p-card>
+                        <ng-template pTemplate="header">
+                            <div>
+                                <i class="pi pi-tag"></i>
+                                {{product.category}}
+                            </div>
+                            {{product.inventoryStatus}}
+                        </ng-template>
+                        <div>
+                            {{product.name}}
+                        </div>
+                        <div>
+                            {{product.description}}
+                        </div>
+                        <div>
+                            <i class='pi' *ngFor="let i of [0, 1, 2, 3, 4]; let index = index"
+                                [ngClass]="{'pi-star-fill': index < product.rating, 'pi-star': index >= product.rating}"
+                                [ngStyle]="{'margin-right':'10px'}"></i>
+                        </div>
+
+                        <ng-template pTemplate="footer">
+                            ${{product.price}}
+                            <p-button icon="pi pi-shopping-cart"></p-button>
+                        </ng-template>
+                    </p-card>
+                </div>
+            </ng-template>
+        </p-dataView>
+
+    </div>
+    <p-paginator [rows]="productsPerPage$ | async" [totalRecords]="totalProducts$ | async"
+        [showCurrentPageReport]="true" [showPageLinks]="true" [showJumpToPageDropdown]="false"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="pageSizeOptions$ | async" (onPageChange)="handlePageSizeChange($event)"></p-paginator>
+</ng-template>
